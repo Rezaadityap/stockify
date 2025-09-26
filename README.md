@@ -25,9 +25,9 @@ Sebelum mulai, pastikan sudah terpasang:
 
 Ikuti langkah-langkah berikut untuk setup project di local sebelum mengerjakan:
 
-git checkout main
-git pull origin main
-git checkout -b feature/nama-fitur
-git add .
-git commit -m "Menambahkan fitur X"
-git push origin feature/nama-fitur
+- git checkout main
+- git pull origin main
+- git checkout -b feature/nama-fitur
+- git add .
+- git commit -m "Menambahkan fitur X"
+- git push origin feature/nama-fitur
