@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'nama' => 'User',
-            'email' => 'user@mail.com',
-            'username' => 'user',
+            'nama' => 'Admin',
+            'email' => 'admin@mail.com',
+            'username' => 'admin',
             'password' => Hash::make('password'),
             'no_hp' => '081585586085',
-            'role_id' => 2
+            'role_id' => 1
         ]);
     }
 }
