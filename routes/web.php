@@ -12,6 +12,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/pengguna/search', [PenggunaController::class, 'search'])->name('pengguna.search');
     Route::resource('/admin/pengguna', PenggunaController::class);
 });
 Route::get('/dashboard', function () {

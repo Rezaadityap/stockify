@@ -11,12 +11,31 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PenggunaController extends Controller
 {
-    public function index(){
-        $user = User::orderBy('role_id', 'asc')->paginate(2);
+    public function index(Request $request)
+    {
+        $query = $request->input('search');
+
+        $userQuery = User::with('role')
+            ->when($query, function ($q, $query) {
+                return $q->where('nama', 'like', "%{$query}%")
+                        ->orWhere('username', 'like', "%{$query}%")
+                        ->orWhere('email', 'like', "%{$query}%");
+            })
+            ->orderBy('role_id', 'asc');
+
+        $user = $userQuery->paginate(2)->appends($request->except('page'));
+
+        if ($request->ajax()) {
+            return response()->json([
+                'table' => view('admin.partials.pengguna_table', compact('user'))->render(),
+                'pagination' => view('admin.partials.pagination', ['paginator' => $user])->render()
+            ]);
+        }
 
         $title = 'Hapus Pengguna?';
         $text = "Yakin ingin menghapus?";
         confirmDelete($title, $text);
+
         return view('admin.pengguna', compact('user'));
     }
 
@@ -83,6 +102,10 @@ class PenggunaController extends Controller
     }
 
     public function destroy($id){
-        
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        Alert::success('Dihapus!', 'Pengguna berhasil dihapus.');
+        return redirect()->route('pengguna.index');
     }
 }
